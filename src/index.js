@@ -19,7 +19,7 @@ module.exports = function solveSudoku(arr){
                         let newMatrix = []; 
                         for(let i = 0; i < psblValues.length; i++){ 
                             arr[row][col] = psblValues[i]; 
-                            newMatrix=mainFunc(arr); 
+                            newMatrix=solveSudoku(arr); 
                             if(newMatrix) return newMatrix; 
                         } 
                         arr[row][col] = 0; 
