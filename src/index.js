@@ -1,33 +1,23 @@
-module.exports = function solveSudoku(arr) {
-	for(let row = 0; row < arr.length; row++){ 
-		for(let col = 0; col < arr[row].length; col++){ 
+module.exports = function solveSudoku(matrix) {
+	for(let row = 0; row < 9; row++){ 
+		for(let col = 0; col < 9; col++){ 
 			const imPsblValues = []; 
-			if(arr[row][col] == 0){ 
-
-				for(let i = Math.floor(row/3)*3; i < (Math.floor(row/3)*3 + 3) ; i++){ 
-					for(let j = Math.floor(col/3)*3; j < (Math.floor(col/3)*3 + 3) ; j++){ 
-						if(arr[i][j] > 0){ 
-							imPsblValues.push(arr[i][j]); 
-						} 
-					} 
+			if(matrix[row][col] == 0){ 
+				for(let i = 0; i < 9; i++){ 
+					let boxRow = Math.floor(row/3)*3 + i%3;
+					let boxCol = Math.floor(col/3) *3 + Math.floor(i/3);
+					imPsblValues.push(matrix[i][col], matrix[row][i], matrix[boxRow][boxCol]); 
 				} 
-				for(let i = 0; i < arr.length; i++){ 
-					if(arr[row][i] > 0) imPsblValues.push(arr[row][i]); 
-					if(arr[i][col] > 0) imPsblValues.push(arr[i][col]); 
-				} 
-				const psblValues = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(value => !~imPsblValues.indexOf(value)); 
-
-
+				const psblValues = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(value => !imPsblValues.includes(value)); 
 				let newMatrix = []; 
 				for(let i = 0; i < psblValues.length; i++){ 
-					arr[row][col] = psblValues[i]; 
-					newMatrix=solveSudoku(arr); 
-					if(newMatrix) return newMatrix; 
+					matrix[row][col] = psblValues[i];
+					if(solveSudoku(matrix)) return matrix; 
 				} 
-				arr[row][col] = 0; 
+				matrix[row][col] = 0; 
 				return false; 
 			} 
 		} 
 	} 
-	return arr; 
+	return matrix; 
 }
