@@ -2,20 +2,19 @@ module.exports = function solveSudoku(matrix) {
 	for(let row = 0; row < 9; row++){ 
 		for(let col = 0; col < 9; col++){ 
 			const imPsblValues = []; 
-			if(matrix[row][col] == 0){ 
+			if(!matrix[row][col]){ 
 				for(let i = 0; i < 9; i++){ 
 					let boxRow = Math.floor(row/3)*3 + i%3;
 					let boxCol = Math.floor(col/3) *3 + Math.floor(i/3);
 					imPsblValues.push(matrix[i][col], matrix[row][i], matrix[boxRow][boxCol]); 
 				} 
 				const psblValues = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(value => !imPsblValues.includes(value)); 
-				let newMatrix = []; 
 				for(let i = 0; i < psblValues.length; i++){ 
 					matrix[row][col] = psblValues[i];
 					if(solveSudoku(matrix)) return matrix; 
 				} 
 				matrix[row][col] = 0; 
-				return false; 
+				return 0; 
 			} 
 		} 
 	} 
