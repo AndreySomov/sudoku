@@ -8,7 +8,7 @@ module.exports = function solveSudoku(matrix) {
 					let boxCol = Math.floor(col/3) *3 + Math.floor(i/3);
 					imPsblValues.push(matrix[i][col], matrix[row][i], matrix[boxRow][boxCol]); 
 				} 
-				for(let key of Array(9).fill((i=1) => i++).filter(value => !imPsblValues.includes(value))){ 
+				for(let key of [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(value => !imPsblValues.includes(value))){ 
 					matrix[row][col] = key;
 					if(solveSudoku(matrix)) return matrix; 
 				} 
